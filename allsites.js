@@ -1,4 +1,4 @@
-(function () {
+export default function () {
   let activeVideo = null;
   let videoStacks = new WeakMap();
   let lastUrl = location.href;
@@ -29,48 +29,43 @@
 
   function trackVideo(video) {
     if (videoStacks.has(video)) return;
-    if (!isSeekable(video)) {
-      const MAX_WAIT_MS = 15000; // fail-safe timeout
-      let timeoutId;
+    if (!isSeekable(video)) return;
+    //   {
+    //   const MAX_WAIT_MS = 15000; // fail-safe timeout
+    //   let timeoutId;
 
-      const cleanupWaiters = () => {
-        video.removeEventListener("loadedmetadata", tryLater);
-        video.removeEventListener("durationchange", tryLater);
-        video.removeEventListener("canplay", tryLater);
-        if (timeoutId) {
-          clearTimeout(timeoutId);
-          timeoutId = null;
-        }
-      };
+    //   const cleanupWaiters = () => {
+    //     video.removeEventListener("loadedmetadata", tryLater);
+    //     video.removeEventListener("durationchange", tryLater);
+    //     video.removeEventListener("canplay", tryLater);
+    //     if (timeoutId) {
+    //       clearTimeout(timeoutId);
+    //       timeoutId = null;
+    //     }
+    //   };
 
-      const tryLater = () => {
-        if (isSeekable(video)) {
-          cleanupWaiters();
-          console.log("✅ Video now seekable, tracking...");
-          trackVideo(video); // retry
-        }
-      };
+    //   const tryLater = () => {
+    //     if (isSeekable(video)) {
+    //       cleanupWaiters();
+    //       console.log("✅ Video now seekable, tracking...");
+    //       trackVideo(video); // retry
+    //     }
+    //   };
 
-      video.addEventListener("loadedmetadata", tryLater);
-      video.addEventListener("durationchange", tryLater);
-      video.addEventListener("canplay", tryLater);
+    //   video.addEventListener("loadedmetadata", tryLater);
+    //   video.addEventListener("durationchange", tryLater);
+    //   video.addEventListener("canplay", tryLater);
 
-      timeoutId = setTimeout(() => {
-        video.setAttribute("data-havit", "banned");
+    //   timeoutId = setTimeout(() => {
+    //     video.setAttribute("data-havit", "banned");
 
-        // second chance
-        video.addEventListener("playing", () => {
-          video.setAttribute("data-havit", "allowed", { once: true });
-          trackVideo(video);
-        });
+    //     cleanupWaiters();
+    //     console.log("⏱️ Timed out waiting for seekable video");
+    //   }, MAX_WAIT_MS);
 
-        cleanupWaiters();
-        console.log("⏱️ Timed out waiting for seekable video");
-      }, MAX_WAIT_MS);
-
-      console.log("⏳ Waiting for video to become seekable");
-      return;
-    }
+    //   console.log("⏳ Waiting for video to become seekable");
+    //   return;
+    // }
 
     video.setAttribute("data-havit", "allowed");
 
@@ -158,8 +153,28 @@
         }
         vids = shadowVids;
       }
+
       vids.forEach((x) => {
-        if (x.getAttribute("data-havit") !== "banned") trackVideo(x);
+        if (x.getAttribute("data-havit") === "allowed" && !videoStacks.has(x)) {
+          x.addEventListener(
+            "playing",
+            () => {
+              trackVideo(x);
+            },
+            { once: true }
+          );
+        }
+
+        if (x.getAttribute("data-havit") !== "tracked") {
+          x.setAttribute("data-havit", "tracked");
+          x.addEventListener(
+            "playing",
+            () => {
+              trackVideo(x);
+            },
+            { once: true }
+          );
+        }
       });
     });
 
@@ -255,4 +270,4 @@
 
   watchUrlChanges();
   observeVideos();
-})();
+}
