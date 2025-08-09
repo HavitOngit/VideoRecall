@@ -3,6 +3,8 @@
   let videoStacks = new WeakMap();
   let lastUrl = location.href;
 
+  console.log = () => {}; // for release
+
   function isSeekable(video) {
     return video.seekable.length > 0 && video.duration;
   }
