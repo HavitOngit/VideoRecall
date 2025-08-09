@@ -32,7 +32,37 @@
   function trackVideo(video) {
     if (videoStacks.has(video)) return;
     if (!isSeekable(video)) {
-      console.log("⏭️ Skipping unseekable video");
+      const MAX_WAIT_MS = 15000; // fail-safe timeout
+      let timeoutId;
+
+      const cleanupWaiters = () => {
+        video.removeEventListener("loadedmetadata", tryLater);
+        video.removeEventListener("durationchange", tryLater);
+        video.removeEventListener("canplay", tryLater);
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+          timeoutId = null;
+        }
+      };
+
+      const tryLater = () => {
+        if (isSeekable(video)) {
+          cleanupWaiters();
+          console.log("✅ Video now seekable, tracking...");
+          trackVideo(video); // retry
+        }
+      };
+
+      video.addEventListener("loadedmetadata", tryLater);
+      video.addEventListener("durationchange", tryLater);
+      video.addEventListener("canplay", tryLater);
+
+      timeoutId = setTimeout(() => {
+        cleanupWaiters();
+        console.log("⏱️ Timed out waiting for seekable video");
+      }, MAX_WAIT_MS);
+
+      console.log("⏳ Waiting for video to become seekable");
       return;
     }
 
@@ -56,7 +86,7 @@
     });
 
     // Track seek jumps
-    setInterval(() => {
+    const tracker = setInterval(() => {
       const stacks = videoStacks.get(video);
       if (!stacks) return;
 
@@ -79,6 +109,8 @@
       stacks.ignoreNextJump = false;
       stacks.lastTime = curTime;
     }, 500);
+
+    window.addEventListener("beforeunload", () => clearInterval(tracker));
   }
 
   // Persistent video finder
@@ -166,16 +198,49 @@
 
   // SPA URL change watcher
   function watchUrlChanges() {
-    new MutationObserver(() => {
+    // More efficient than a broad DOM MutationObserver: hook History API + navigation events
+    const triggerIfChanged = (reason) => {
       const currentUrl = location.href;
       if (currentUrl !== lastUrl) {
-        console.log("🔗 URL changed:", currentUrl);
+        console.log(`🔗 URL changed (${reason}):`, currentUrl);
         lastUrl = currentUrl;
         activeVideo = null;
         videoStacks = new WeakMap();
         observeVideos();
       }
-    }).observe(document, { subtree: true, childList: true });
+    };
+
+    // Debounce rapid successive triggers (some routers call pushState followed by replaceState)
+    let debounceTimer = null;
+    const scheduleCheck = (reason) => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => triggerIfChanged(reason), 0);
+    };
+
+    // Patch pushState / replaceState to detect programmatic SPA navigations
+    ["pushState", "replaceState"].forEach((method) => {
+      const original = history[method];
+      if (typeof original === "function") {
+        history[method] = function (...args) {
+          const ret = original.apply(this, args);
+          scheduleCheck(method);
+          return ret;
+        };
+      }
+    });
+
+    // Back/forward navigation
+    window.addEventListener("popstate", () => scheduleCheck("popstate"));
+    // Hash changes (some apps rely on # routing)
+    window.addEventListener("hashchange", () => scheduleCheck("hashchange"));
+
+    // Lightweight fallback polling (covers rare direct location.href assignments w/o events)
+    const pollInterval = setInterval(() => triggerIfChanged("poll"), 1000);
+    // Attempt cleanup when page unloads
+    window.addEventListener("beforeunload", () => clearInterval(pollInterval));
+
+    // Initial call
+    triggerIfChanged("init");
   }
 
   watchUrlChanges();
