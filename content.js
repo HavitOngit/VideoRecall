@@ -9,6 +9,21 @@
     );
   }
 
+  // Fallback: search through open shadow roots only if regular DOM search finds no videos
+  function findAllVideos(root = document, found = new Set()) {
+    // Normal DOM first (this also runs for shadow root contents when recursing)
+    root.querySelectorAll("video").forEach((v) => found.add(v));
+
+    // Recurse into open shadow roots
+    root.querySelectorAll("*").forEach((el) => {
+      if (el.shadowRoot) {
+        findAllVideos(el.shadowRoot, found);
+      }
+    });
+
+    return Array.from(found);
+  }
+
   function setActiveVideo(video) {
     activeVideo = video;
     console.log("🎥 Active video switched:", video);
@@ -68,9 +83,15 @@
 
   // Persistent video finder
   function findPlayingVideo() {
-    return [...document.querySelectorAll("video")].find(
-      (v) => !v.paused && !v.ended && v.readyState > 2
-    );
+    // Try normal DOM first
+    let videos = [...document.querySelectorAll("video")];
+    if (videos.length === 0) {
+      videos = findAllVideos();
+      if (videos.length) {
+        console.log("🔍 Using shadow DOM fallback to locate videos");
+      }
+    }
+    return videos.find((v) => !v.paused && !v.ended && v.readyState > 2);
   }
 
   function observeVideos() {
@@ -86,7 +107,18 @@
 
     // Watch DOM for new videos
     const observer = new MutationObserver(() => {
-      document.querySelectorAll("video").forEach(trackVideo);
+      let vids = document.querySelectorAll("video");
+      if (vids.length === 0) {
+        const shadowVids = findAllVideos();
+        if (shadowVids.length) {
+          console.log(
+            "🔍 Mutation fallback: shadow DOM videos discovered",
+            shadowVids.length
+          );
+        }
+        vids = shadowVids;
+      }
+      vids.forEach(trackVideo);
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
