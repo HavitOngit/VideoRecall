@@ -109,6 +109,11 @@
         stacks.undoStack.push(jump);
         stacks.redoStack.length = 0;
 
+        if (stacks.undoStack.length > 200) {
+          stacks.undoStack.shift(); // Limit stack size
+        }
+        console.log("stack length" + stacks.undoStack.length);
+
         console.log(
           `⏩ Jump detected! From ${(jump.from / 60).toFixed(2)} min to ${(
             jump.to / 60
