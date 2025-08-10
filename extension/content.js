@@ -3,7 +3,20 @@
   let videoStacks = new WeakMap();
   let lastUrl = location.href;
 
-  console.log = () => {}; // for release
+  // for release
+  console.log = () => {};
+
+  function markInstalled() {
+    if (!document.documentElement.hasAttribute("data-video-recall-installed")) {
+      document.documentElement.setAttribute("data-video-recall-installed", "1");
+    }
+  }
+
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", markInstalled, { once: true });
+  } else {
+    markInstalled();
+  }
 
   function isSeekable(video) {
     return video.seekable.length > 0 && video.duration;
