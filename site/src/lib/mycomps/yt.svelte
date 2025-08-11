@@ -422,6 +422,7 @@
     margin: 0 auto;
     font-family: system-ui, sans-serif;
     user-select: none;
+    overflow: hidden; /* prevent accidental horizontal scroll if children overflow */
   }
   video {
     width: 100%;
@@ -438,6 +439,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
+    box-sizing: border-box;
+    width: 100%; /* ensure controls never exceed player width */
   }
   .player:not(:hover) .controls {
     opacity: 0;
@@ -484,6 +487,8 @@
     display: flex;
     gap: 0.6rem;
     align-items: center;
+    width: 100%;
+    min-width: 0; /* allow flex children to shrink */
   }
   .btn {
     background: rgba(255, 255, 255, 0.1);
@@ -521,6 +526,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    min-width: 0; /* prevent overflow from intrinsic min-width of content */
   }
   .progress-bar {
     position: relative;
@@ -570,6 +576,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    flex: 0 0 auto; /* don't let volume group steal flexible space beyond content */
   }
   .vol {
     accent-color: #fff;

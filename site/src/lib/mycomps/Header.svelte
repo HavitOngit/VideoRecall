@@ -4,9 +4,9 @@
 </script>
 
 <div class="flex items-center justify-between">
-  <div class="flex gap-2">
+  <div class="flex gap-2 items-center">
     <img src="/logo.svg" alt="VideoRecall" class="h-12" />
-    <p class="text-4xl">VideoRecall</p>
+    <p class="text-xl md:text-4xl">VideoRecall</p>
   </div>
   <div>
     <Button variant="outline" class="flex items-center gap-1">
