@@ -9,11 +9,6 @@
 
   const browsers: Browser[] = [
     {
-      name: "Firefox",
-      logo: "/images/firefox.png",
-      colors: "black",
-    },
-    {
       name: "Edge",
       logo: "/images/edge.png",
       colors:
@@ -38,26 +33,21 @@
   }
 </script>
 
-<div class="flex flex-col gap-4 p-6">
-  <h2 class="text-2xl font-bold text-center mb-6">Download Our App</h2>
-  <div class="flex flex-wrap gap-4 justify-center">
-    {#each browsers as b (b.name)}
-      <Button
-        class={`${b.colors} text-white font-medium px-6 py-4 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
-        onclick={() => handleClick(b.name)}
-      >
-        <img
-          src={b.logo}
-          alt={`${b.name} logo`}
-          width="24"
-          height="24"
-          class="rounded-sm"
-          on:error={(e) =>
-            e.currentTarget instanceof HTMLImageElement &&
-            (e.currentTarget.src = "/vite.svg")}
-        />
-        <span>Add to {b.name}</span>
-      </Button>
-    {/each}
-  </div>
-</div>
+{#snippet BrowserButton(b: Browser)}
+  <Button
+    class={`${b.colors} text-white font-medium px-6 py-4 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
+    onclick={() => handleClick(b.name)}
+  >
+    <img
+      src={b.logo}
+      alt={`${b.name} logo`}
+      width="24"
+      height="24"
+      class="rounded-sm"
+      on:error={(e) =>
+        e.currentTarget instanceof HTMLImageElement &&
+        (e.currentTarget.src = "/vite.svg")}
+    />
+    <span>Add to {b.name}</span>
+  </Button>
+{/snippet}

@@ -12,4 +12,4 @@
   <p>- Open-Source Under Apache 2.0</p>
 </div>
 
-<StoreButtons />
+<StoreButtons name="Chrome" />
