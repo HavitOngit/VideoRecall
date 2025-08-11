@@ -1,6 +1,7 @@
 <script lang="ts">
   import Header from "$lib/mycomps/Header.svelte";
   import Intro from "$lib/mycomps/Intro.svelte";
+  import BrowserButtons from "$lib/mycomps/browser-buttons.svelte";
   import Yt from "$lib/mycomps/yt.svelte";
   import "./app.css";
 </script>
@@ -13,4 +14,6 @@
       <Yt />
     </div>
   </div>
+
+  <BrowserButtons />
 </main>
