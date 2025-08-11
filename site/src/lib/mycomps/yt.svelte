@@ -628,28 +628,44 @@
   @media (max-width: 600px) {
     .controls {
       flex-direction: row;
-      flex-wrap: wrap;
-      padding: 0.5rem 0.5rem 0.75rem;
+      flex-wrap: nowrap;
+      padding: 0.5rem 0.5rem 0.6rem;
     }
     .row {
       width: 100%;
-      justify-content: space-between;
+      justify-content: flex-start;
+      gap: 0.45rem;
     }
+    /* Keep buttons intrinsic so progress bar can grow */
     .btn {
-      flex: 1 1 48%;
-      margin: 0.2rem 0;
+      flex: 0 0 auto;
+      margin: 0;
     }
+    /* Hide expanding volume slider entirely on small screens */
+    .volume-slider,
+    .volume-group:hover .volume-slider,
+    .volume-group:focus-within .volume-slider,
     .vol {
-      width: 100px;
+      display: none !important;
+      width: 0 !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    /* Give progress bar priority */
+    .progress-wrapper {
+      flex: 1 1 auto;
+    }
+    /* Optionally shrink time or hide if super tight */
+    @media (max-width: 430px) {
+      .time {
+        display: none;
+      }
     }
   }
   @media (max-width: 400px) {
     .btn {
       font-size: 0.8rem;
       padding: 0.3rem 0.5rem;
-    }
-    .vol {
-      width: 80px;
     }
   }
   /* Undo/redo history stacks */
