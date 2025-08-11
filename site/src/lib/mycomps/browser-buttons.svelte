@@ -1,5 +1,32 @@
 <script lang="ts">
   import Button from "$lib/components/ui/button/button.svelte";
+  import { onMount } from "svelte";
+  import StoreButtons from "./store-buttons.svelte";
+
+  let browser = $state("");
+
+  function getBrowserName() {
+    // @ts-ignore
+    if (!!navigator.brave) {
+      return "Brave";
+      // @ts-ignore
+    } else if (!!navigator.mozGetUserMedia) {
+      return "Firefox";
+      // @ts-ignore
+    } else if (navigator.userAgentData.brands[1].brand === "Google Chrome") {
+      return "Chrome";
+      // @ts-ignore
+    } else if (navigator.userAgentData.brands[1].brand === "Microsoft Edge") {
+      return "Edge";
+    } else {
+      return "unknown";
+    }
+  }
+
+  onMount(() => {
+    browser = getBrowserName();
+    console.log(browser);
+  });
 
   interface Browser {
     name: string;
@@ -51,3 +78,11 @@
     <span>Add to {b.name}</span>
   </Button>
 {/snippet}
+
+{#if browser === "Edge"}
+  {@render BrowserButton(browsers[0])}
+{:else if browser === "Brave"}
+  {@render BrowserButton(browsers[1])}
+{:else}
+  <StoreButtons name={browser} />
+{/if}

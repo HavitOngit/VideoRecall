@@ -14,6 +14,4 @@
       <Yt />
     </div>
   </div>
-
-  <BrowserButtons />
 </main>

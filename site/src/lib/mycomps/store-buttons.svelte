@@ -1,6 +1,5 @@
 <script lang="ts">
   import Button from "$lib/components/ui/button/button.svelte";
-  import { Store } from "lucide-svelte";
 
   let { name = "both" } = $props();
   interface Browser {
@@ -33,7 +32,7 @@
   }
 </script>
 
-{#snippet StoreButton(b)}
+{#snippet StoreButton(b: Browser)}
   <Button
     class={`${b.colors} text-white font-medium px-6 py-7 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
     onclick={() => handleClick(b.name)}
@@ -59,7 +58,7 @@
   {@render StoreButton(browsers[0])}
 {:else if name === "Firefox"}
   {@render StoreButton(browsers[1])}
-{:else}
+{:else if name === "unknown"}
   {@render StoreButton(browsers[0])}
   {@render StoreButton(browsers[1])}
 {/if}

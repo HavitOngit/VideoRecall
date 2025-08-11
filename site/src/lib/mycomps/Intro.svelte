@@ -1,5 +1,5 @@
 <script>
-  import StoreButtons from "./store-buttons.svelte";
+  import BrowserButtons from "./browser-buttons.svelte";
 </script>
 
 <div class="flex flex-col gap-2 text-6xl">
@@ -12,4 +12,6 @@
   <p>- Open-Source Under Apache 2.0</p>
 </div>
 
-<StoreButtons name="Chrome" />
+<div class="pt-8">
+  <BrowserButtons />
+</div>
