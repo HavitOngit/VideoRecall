@@ -12,11 +12,11 @@ Bring editor-style history to every online video. Jump back to where you were. J
 
 Try the functionality instantly in your browser here:
 
-Seek around, then use Ctrl+Z / Ctrl+Y to experience undo / redo without installing the extension first.
-
 <a href="https://videorecall.pages.dev/" target="_blank">
 	<img src="site/public/site-image.png" alt="Open Live In-Browser Demo" width="720" />
 </a>
+
+Seek around, then use Ctrl+Z / Ctrl+Y to experience undo / redo without installing the extension.
 
 > Click the image to open the zero‑install live demo.
 
