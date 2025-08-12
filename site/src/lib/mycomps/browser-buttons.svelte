@@ -70,14 +70,14 @@
 
 {#snippet BrowserButton(b: Browser)}
   <Button
-    class={`${b.colors} text-white font-medium px-6 py-4 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
+    class={`${b.colors} text-white font-medium px-6 py-7 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
     onclick={() => handleClick(b.href)}
   >
     <img
       src={b.logo}
       alt={`${b.name} logo`}
-      width="24"
-      height="24"
+      width="38"
+      height="38"
       class="rounded-sm"
       onerror={(e) =>
         e.currentTarget instanceof HTMLImageElement &&

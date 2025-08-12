@@ -72,7 +72,7 @@
   {@render StoreButton(browsers[1])}
 {:else if name === "Opera"}
   {@render StoreButton(browsers[2])}
-{:else if name === "unknown"}
+{:else}
   {@render StoreButton(browsers[0])}
   {@render StoreButton(browsers[1])}
 {/if}

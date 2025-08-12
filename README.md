@@ -14,6 +14,12 @@ Try the functionality instantly in your browser here:
 
 Seek around, then use Ctrl+Z / Ctrl+Y to experience undo / redo without installing the extension first.
 
+<a href="https://videorecall.pages.dev/" target="_blank">
+	<img src="site/public/site-image.png" alt="Open Live In-Browser Demo" width="720" />
+</a>
+
+> Click the image to open the zero‑install live demo.
+
 ## 🤩 How It Feels
 
 1. Start watching any video on a site.
