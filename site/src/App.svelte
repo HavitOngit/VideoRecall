@@ -6,9 +6,9 @@
   import "./app.css";
 </script>
 
-<main class="mx-10 w-fit md:mx-36 mt-6 gap-4 flex flex-col">
+<main class="mx-auto mb-20 max-w-6xl pt-4 px-4 sm:px-6 md:px-8">
   <Header />
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-16">
+  <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-4 pt-16">
     <div><Intro /></div>
     <div>
       <Yt />

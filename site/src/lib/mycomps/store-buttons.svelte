@@ -16,14 +16,14 @@
       ptext: "Available in",
       stext: "Chrome Web Store",
       logo: "/images/chrome.png",
-      colors: "bg-gray-500 hover:bg-gray-400",
+      colors: "bg-white hover:bg-gray-300 border border-gray-300 text-gray-600",
     },
     {
       name: "Firefox",
       ptext: "GET THE",
       stext: "ADD-ONS",
       logo: "/images/firefox.png",
-      colors: "bg-black hover:bg-gray-800",
+      colors: "bg-black hover:bg-gray-800 text-white",
     },
   ];
 
@@ -34,7 +34,7 @@
 
 {#snippet StoreButton(b: Browser)}
   <Button
-    class={`${b.colors} text-white font-medium px-6 py-7 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
+    class={`${b.colors} font-medium px-6 py-7 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
     onclick={() => handleClick(b.name)}
   >
     <img

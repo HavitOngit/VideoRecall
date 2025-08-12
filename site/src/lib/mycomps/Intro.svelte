@@ -12,6 +12,6 @@
   <p>- Open-Source Under Apache 2.0</p>
 </div>
 
-<div class="pt-8">
+<div class="pt-8 pl-2">
   <BrowserButtons />
 </div>

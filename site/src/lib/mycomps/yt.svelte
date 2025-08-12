@@ -379,6 +379,10 @@
   </div>
 </div>
 
+{#if undoStack.length == 0 && redoStack.length == 0}
+  <p class="text-right">Try to seek this video</p>
+{/if}
+
 {#if undoStack.length > 0 || redoStack.length > 0}
   <div class="history-stacks">
     {#if undoStack.length > 0}
