@@ -32,7 +32,6 @@
 
   const progress = $derived(duration ? currentTime / duration : 0);
 
-  // ===================== Undo / Redo =====================
   function undo() {
     const nextAction = undoStack.pop();
     if (nextAction) {
@@ -273,7 +272,7 @@
     onplay={handOffFocus}
     onplaycapture={onPlay}
     onpausecapture={onPause}
-    onloadeddata={onVideoLoaded}
+    onloadedmetadata={onVideoLoaded}
     ontimeupdate={onTimeUpdate}
     ondurationchange={onDurationChange}
     playsinline

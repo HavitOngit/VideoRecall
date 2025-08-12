@@ -32,32 +32,30 @@
   ];
 
   function handleClick(name: string) {
-    console.log(`Downloading for ${name}`);
+    window.open(name, "_blank");
   }
 </script>
 
 {#snippet StoreButton(b: Browser)}
-  <a href={b.href} target="_blank">
-    <Button
-      class={`${b.colors} font-medium px-6 py-7 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
-      onclick={() => handleClick(b.name)}
-    >
-      <img
-        src={b.logo}
-        alt={`${b.name} logo`}
-        width="38"
-        height="38"
-        class="rounded-sm"
-        on:error={(e) =>
-          e.currentTarget instanceof HTMLImageElement &&
-          (e.currentTarget.src = "/vite.svg")}
-      />
-      <div class="flex flex-col gap-0 text-left">
-        <span>{b.ptext}</span>
-        <span class="font-bold text-lg">{b.stext}</span>
-      </div>
-    </Button>
-  </a>
+  <Button
+    class={`${b.colors} font-medium px-6 py-7 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
+    onclick={() => handleClick(b.href)}
+  >
+    <img
+      src={b.logo}
+      alt={`${b.name} logo`}
+      width="38"
+      height="38"
+      class="rounded-sm"
+      onerror={(e) =>
+        e.currentTarget instanceof HTMLImageElement &&
+        (e.currentTarget.src = "/vite.svg")}
+    />
+    <div class="flex flex-col gap-0 text-left">
+      <span>{b.ptext}</span>
+      <span class="font-bold text-lg">{b.stext}</span>
+    </div>
+  </Button>
 {/snippet}
 
 {#if name === "Chrome"}

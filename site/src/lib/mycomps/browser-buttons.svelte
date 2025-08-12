@@ -61,14 +61,14 @@
   ];
 
   function handleClick(name: string) {
-    console.log(`Downloading for ${name}`);
+    window.open(name, "_blank");
   }
 </script>
 
 {#snippet BrowserButton(b: Browser)}
   <Button
     class={`${b.colors} text-white font-medium px-6 py-4 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
-    onclick={() => handleClick(b.name)}
+    onclick={() => handleClick(b.href)}
   >
     <img
       src={b.logo}
@@ -76,7 +76,7 @@
       width="24"
       height="24"
       class="rounded-sm"
-      on:error={(e) =>
+      onerror={(e) =>
         e.currentTarget instanceof HTMLImageElement &&
         (e.currentTarget.src = "/vite.svg")}
     />
