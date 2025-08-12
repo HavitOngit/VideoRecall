@@ -1,19 +1,19 @@
 {
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
+  "name": "VideoRecall",
+  "description": "undo/redo functionality for video playback",
   "version": "1.0",
   "manifest_version": 3,
 
   "browser_specific_settings": {
     "gecko": {
-      "id": "videorecall@example.com",
+      "id": "videorecall@havit.com",
       "strict_min_version": "121.0"
     }
   },
 
   "icons": {
-    "16": "image.png",
-    "48": "image.png",
+    "16": "image1.png",
+    "48": "image1.png",
     "128": "image1.png"
   },
 

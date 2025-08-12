@@ -1,7 +1,6 @@
 <script lang="ts">
   import Header from "$lib/mycomps/Header.svelte";
   import Intro from "$lib/mycomps/Intro.svelte";
-  import BrowserButtons from "$lib/mycomps/browser-buttons.svelte";
   import Yt from "$lib/mycomps/yt.svelte";
   import "./app.css";
 </script>
@@ -15,3 +14,13 @@
     </div>
   </div>
 </main>
+
+<footer
+  class="fixed inset-x-0 bottom-0 backdrop-blur text-[11px] sm:text-xs text-gray-700-200 text-center py-1 tracking-wide"
+>
+  suppots all
+  <a href="/" class="underline"> Chromium </a> and
+
+  <a href="/" class="underline"> Gecko </a>
+  based browesers
+</footer>
