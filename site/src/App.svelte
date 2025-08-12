@@ -1,6 +1,7 @@
 <script lang="ts">
   import Header from "$lib/mycomps/Header.svelte";
   import Intro from "$lib/mycomps/Intro.svelte";
+  import { storeLinks } from "$lib/mycomps/storelinks";
   import Yt from "$lib/mycomps/yt.svelte";
   import "./app.css";
 </script>
@@ -19,8 +20,9 @@
   class="fixed inset-x-0 bottom-0 backdrop-blur text-[11px] sm:text-xs text-gray-700-200 text-center py-1 tracking-wide"
 >
   suppots all
-  <a href="/" class="underline"> Chromium </a> and
+  <a href={storeLinks.chrome} target="_blank" class="underline"> Chromium </a>
+  and
 
-  <a href="/" class="underline"> Gecko </a>
+  <a href={storeLinks.firefox} target="_blank" class="underline"> Gecko </a>
   based browesers
 </footer>

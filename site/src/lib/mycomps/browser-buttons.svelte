@@ -2,6 +2,7 @@
   import Button from "$lib/components/ui/button/button.svelte";
   import { onMount } from "svelte";
   import StoreButtons from "./store-buttons.svelte";
+  import { storeLinks } from "./storelinks";
 
   let browser = $state("");
 
@@ -32,6 +33,7 @@
     name: string;
     logo: string;
     colors: string;
+    href: string;
   }
 
   const browsers: Browser[] = [
@@ -40,18 +42,21 @@
       logo: "/images/edge.png",
       colors:
         "bg-gradient-to-r from-blue-600 via-cyan-500 to-green-500 hover:from-blue-700 hover:via-cyan-600 hover:to-green-600",
+      href: storeLinks.edge,
     },
     {
       name: "Brave",
       logo: "/images/brave.png",
       colors:
         "bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700",
+      href: storeLinks.chrome,
     },
     {
       name: "Zen",
       logo: "/images/zen.png",
       colors:
         "bg-gradient-to-r from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700",
+      href: storeLinks.firefox,
     },
   ];
 
