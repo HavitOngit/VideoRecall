@@ -19,6 +19,9 @@
       // @ts-ignore
     } else if (navigator.userAgentData.brands[1].brand === "Microsoft Edge") {
       return "Edge";
+      // @ts-ignore
+    } else if (navigator.userAgentData.brands[0].brand === "Opera") {
+      return "Opera";
     } else {
       return "unknown";
     }

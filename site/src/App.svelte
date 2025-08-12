@@ -23,6 +23,8 @@
   <a href={storeLinks.chrome} target="_blank" class="underline"> Chromium </a>
   and
 
-  <a href={storeLinks.firefox} target="_blank" class="underline"> Gecko </a>
+  <a href={storeLinks.firefox} target="_blank" class="underline">
+    Firefox(Gecko)
+  </a>
   based browesers
 </footer>

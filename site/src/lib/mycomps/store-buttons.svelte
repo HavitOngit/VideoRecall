@@ -29,6 +29,14 @@
       colors: "bg-black hover:bg-gray-800 text-white",
       href: storeLinks.firefox,
     },
+    {
+      name: "Opera",
+      ptext: "GET THE",
+      stext: "ADD-ONS",
+      logo: "/images/opera.png",
+      colors: "bg-black hover:bg-gray-800 text-white",
+      href: storeLinks.opera,
+    },
   ];
 
   function handleClick(name: string) {
@@ -38,7 +46,7 @@
 
 {#snippet StoreButton(b: Browser)}
   <Button
-    class={`${b.colors} font-medium px-6 py-7 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
+    class={`${b.colors} font-medium px-6 py-7 mb-2 rounded-lg flex items-center gap-3 hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl`}
     onclick={() => handleClick(b.href)}
   >
     <img
@@ -62,6 +70,8 @@
   {@render StoreButton(browsers[0])}
 {:else if name === "Firefox"}
   {@render StoreButton(browsers[1])}
+{:else if name === "Opera"}
+  {@render StoreButton(browsers[2])}
 {:else if name === "unknown"}
   {@render StoreButton(browsers[0])}
   {@render StoreButton(browsers[1])}

@@ -4,14 +4,16 @@
 </script>
 
 <div class="flex items-center justify-between">
-  <div class="flex gap-2 items-center">
+  <a href="/" class="flex gap-2 items-center">
     <img src="/logo.svg" alt="VideoRecall" class="h-12" />
     <p class="text-xl md:text-2xl font-medium">VideoRecall</p>
-  </div>
+  </a>
   <div>
-    <Button variant="outline" class="flex items-center gap-1">
-      <Github />
-      <span>GitHub</span>
-    </Button>
+    <a href="https://github.com/HavitOngit/VideoRecall">
+      <Button variant="outline" class="flex items-center gap-1">
+        <Github />
+        <span>GitHub</span>
+      </Button>
+    </a>
   </div>
 </div>

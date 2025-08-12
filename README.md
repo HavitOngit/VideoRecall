@@ -8,28 +8,13 @@ Bring editor-style history to every online video. Jump back to where you were. J
 
 </div>
 
-## � Live Demo (No Install Needed)
+## 📎 See in Action (No Install Needed)
 
 Try the functionality instantly in your browser here:
 
-👉 https://videorecall.pages.dev/
-
 Seek around, then use Ctrl+Z / Ctrl+Y to experience undo / redo without installing the extension first.
 
-## 📽 Demo Video
-
-<details open>
-<summary>See VideoRecall in action (seek / undo / redo)</summary>
-
-<p align="center">
-<video src="site/public/demo.mp4"  controls width="640">
-	Your browser does not support the video tag.
-</video>
-</p>
-
-</details>
-
-## �🎬 How It Feels
+## 🤩 How It Feels
 
 1. Start watching any video on a site.
 2. Jump far ahead (click timeline / use chapter links / drag scrubber).
