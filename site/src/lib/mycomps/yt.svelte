@@ -2,6 +2,8 @@
   import { onMount, onDestroy } from "svelte";
   import videojs from "video.js";
   import "video.js/dist/video-js.css";
+  // DASH support
+  import "videojs-contrib-dash";
   import type Player from "video.js/dist/types/player";
 
   // Underlying video element ref for Video.js
@@ -110,12 +112,26 @@
     return h > 0 ? `${h}:${mm}:${ss}` : `${mm}:${ss}`;
   }
 
+  const DASH_SRC =
+    "https://customer-bsnaxhlfalb3pe52.cloudflarestream.com/fc5631ba4df61cb07083e20aa3e4ba18/manifest/video.mpd";
+
   onMount(() => {
     // Initialize Video.js
     player = videojs(videoEl, {
       controls: true,
       fluid: true,
       preload: "auto",
+      html5: {
+        vhs: {
+          overrideNative: true,
+        },
+      },
+      sources: [
+        {
+          src: DASH_SRC,
+          type: "application/dash+xml",
+        },
+      ],
     });
 
     player.on("loadedmetadata", () => {
@@ -153,13 +169,9 @@
   <video
     bind:this={videoEl}
     id="player"
-    class="video-js vjs-default-skin"
+    class="video-js vjs-default-skin vjs-big-play-centered"
     playsinline
-  >
-    <track kind="captions" label="English" srclang="en" default />
-    <!-- Keeping same video path as original component -->
-    <source src="/demo.mp4" type="video/mp4" />
-  </video>
+  ></video>
 </div>
 
 {#if undoStack.length == 0 && redoStack.length == 0}
