@@ -1,0 +1,78 @@
+name: extension-build
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - "extension/**"
+      - ".github/workflows/extension-build.yml"
+  workflow_dispatch: {}
+
+jobs:
+  build-extension:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # needed to push version bump
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Bump manifest patch version (only on PR open/reopen)
+        if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+        working-directory: extension
+        run: |
+          echo 'Original manifest version:'
+          cat manifest.json | jq -r '.version'
+          node - <<'EOF'
+          import fs from 'fs';
+          const manifestPath = 'manifest.json';
+          const manifest = JSON.parse(fs.readFileSync(manifestPath,'utf8'));
+          let parts = manifest.version.split('.');
+          while (parts.length < 3) parts.push('0');
+            parts[2] = String(Number(parts[2]||'0') + 1);
+          manifest.version = parts.join('.');
+          fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
+          console.log('Bumped version to', manifest.version);
+          EOF
+          echo 'New manifest version:'
+          cat manifest.json | jq -r '.version'
+
+      - name: Commit version bump
+        if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+        run: |
+          if git diff --quiet; then
+            echo 'No changes to commit.'
+          else
+            VERSION=$(cat extension/manifest.json | jq -r '.version')
+            git config user.name 'github-actions'
+            git config user.email 'github-actions@users.noreply.github.com'
+            git add extension/manifest.json
+            git commit -m "chore(extension): bump manifest version to ${VERSION}"
+            git push
+          fi
+
+      - name: Install deps (extension)
+        working-directory: extension
+        run: bun install
+
+      - name: Build extension zip
+        working-directory: extension
+        run: bun build-extension.js --out dist/extension.zip
+
+      - name: Show build contents
+        working-directory: extension/dist
+        run: ls -l
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-zip
+          path: extension/dist/extension.zip
+          if-no-files-found: error
