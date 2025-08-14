@@ -1,6 +1,6 @@
 export const storeLinks = {
   chrome: "https://chrome.google.com/webstore/detail/your-extension-id",
   firefox: "https://addons.mozilla.org/en-US/firefox/addon/videorecall/",
-  edge: "https://microsoftedge.microsoft.com/addons/detail/your-extension-id",
+  edge: "https://microsoftedge.microsoft.com/addons/detail/ncjllbdnmohaelpkejnegneokigebekp",
   opera: "https://addons.opera.com/en/extensions/details/your-extension-id",
 };
