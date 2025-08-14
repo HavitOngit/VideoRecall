@@ -1,0 +1,12 @@
+{
+  "name": "videorecall-extension-builder",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "bun build-extension.js"
+  },
+  "dependencies": {
+    "archiver": "^6.0.2"
+  }
+}

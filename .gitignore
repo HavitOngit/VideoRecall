@@ -1,0 +1,43 @@
+# Root ignore for VideoRecall mono-repo
+# (Site + Extension)
+
+# Dependency directories
+node_modules/
+
+# Bun
+bun.lockb
+
+# Build outputs
+/dist/
+site/dist/
+extension/dist/
+*.zip
+
+# Temp build dirs
+.ext-build-tmp-*/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS / Editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Environment / local config
+*.local
+.env
+.env.*
+
+# Misc
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
