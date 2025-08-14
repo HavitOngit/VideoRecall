@@ -6,6 +6,11 @@ on:
     paths:
       - "extension/**"
       - ".github/workflows/extension-build.yml"
+  push:
+    branches: [site]
+    paths:
+      - "extension/**"
+      - ".github/workflows/extension-build.yml"
   workflow_dispatch: {}
 
 jobs:
@@ -76,3 +81,38 @@ jobs:
           name: extension-zip
           path: extension/dist/extension.zip
           if-no-files-found: error
+
+      - name: Read manifest version
+        id: manifest_version
+        run: echo "version=$(jq -r .version extension/manifest.json)" >> $GITHUB_OUTPUT
+
+      - name: Create tag & GitHub Release (push to default branch only)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/site'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${{ steps.manifest_version.outputs.version }}
+          TAG=v$VERSION
+          echo "Preparing release for $TAG"
+          git fetch --tags
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists. Will just (re)attach asset to release if needed."
+          else
+            git tag "$TAG"
+            git push origin "$TAG"
+          fi
+          # Create release if missing
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists." 
+          else
+            gh release create "$TAG" extension/dist/extension.zip \
+              --title "Extension $VERSION" \
+              --notes "Automated build for version $VERSION" \
+              --verify-tag
+          fi
+          # Ensure asset present (re-upload if not)
+          if gh release view "$TAG" --json assets --jq '.assets[].name' | grep -q '^extension.zip$'; then
+            echo "Asset already present."
+          else
+            gh release upload "$TAG" extension/dist/extension.zip --clobber
+          fi

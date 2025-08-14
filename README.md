@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="extension/image1.png" alt="VideoRecall Icon" width="96" />
+<img src="site/public/logo.png" alt="VideoRecall Icon" width="96" />
 
 # VideoRecall – Undo / Redo Your Video Seeks
 
